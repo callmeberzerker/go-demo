@@ -23,3 +23,11 @@ func OpenDbConnection() *gorm.DB {
 	}
 	return db
 }
+
+func MigrateModels() {
+	db := OpenDbConnection()
+	db.AutoMigrate(&Book{})
+	db.AutoMigrate(&Author{})
+	db.Model(&Book{}).AddForeignKey("author_id", "author(id)", "RESTRICT", "RESTRICT")
+
+}

@@ -10,7 +10,7 @@ import (
 
 var books []models.Book
 
-func Configure(r *mux.Router) {
+func ConfigureBookRoutes(r *mux.Router) {
 	books = append(books, models.Book{ID: "1", Isbn: "1111111", Title: "Book1", Author: &models.Author{
 		FirstName: "John",
 		LastName:  "Doe",

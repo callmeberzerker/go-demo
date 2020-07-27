@@ -10,12 +10,9 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	db := integration.OpenDbConnection()
 
-	db.AutoMigrate(&integration.Book{})
-	db.AutoMigrate(&integration.Author{})
-	db.Model(&integration.Book{}).AddForeignKey("author_id", "author(id)", "RESTRICT", "RESTRICT")
+	integration.MigrateModels()
 
-	ctrl.Configure(r)
+	ctrl.ConfigureBookRoutes(r)
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
