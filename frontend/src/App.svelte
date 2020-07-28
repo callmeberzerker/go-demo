@@ -1,6 +1,6 @@
 <script lang="ts">
 	import MyComp from "./components/MyComp.svelte";
-	export let name;
+	export let name: string;
 </script>
 
 <main>

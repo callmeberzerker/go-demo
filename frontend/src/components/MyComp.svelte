@@ -1,5 +1,5 @@
-<script>
-    export let name;
+<script type="ts">
+    export let name: string;
 </script>
 
 <main>
