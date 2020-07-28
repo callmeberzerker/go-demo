@@ -1,35 +1,35 @@
 package service
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"go-demo/main/app/integration"
 	"go-demo/main/app/rest/models"
 )
 
-func SaveBook(bookDto models.Book) models.Book {
+func CreateBook(bookDto models.Book) (models.Book, error) {
 	db := integration.OpenDbConnection()
 
-	trx := db.Begin()
+	err := db.Transaction(func(trx *gorm.DB) error {
+		var bookEntity = &integration.Book{
+			Isbn:  bookDto.Isbn,
+			Title: bookDto.Title,
+			Author: integration.Author{
+				Model:     gorm.Model{ID: bookDto.Author.ID},
+				FirstName: bookDto.Author.FirstName,
+				LastName:  bookDto.Author.LastName,
+			},
+		}
+		if err := integration.SaveNewBook(bookEntity, trx).Error; err != nil {
 
-	var bookEntity = &integration.Book{
-		Isbn:  bookDto.Isbn,
-		Title: bookDto.Title,
-		Author: integration.Author{
-			Model:     gorm.Model{ID: bookDto.Author.ID},
-			FirstName: bookDto.Author.FirstName,
-			LastName:  bookDto.Author.LastName,
-		},
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
+		return models.Book{}, err
 	}
-	if result := integration.SaveNewBook(bookEntity, trx); result.Error != nil {
 
-		fmt.Println("We have error!")
-		fmt.Println(result.Error)
-		trx.Rollback()
-	}
-
-	trx.Commit()
-	db.Close()
-	return models.Book{}
+	return models.Book{}, nil
 }

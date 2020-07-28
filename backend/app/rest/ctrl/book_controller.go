@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/mux"
 	"go-demo/main/app/rest/models"
 	"go-demo/main/app/service"
+	"log"
 	"net/http"
 )
 
@@ -51,9 +52,16 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 	var book models.Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
 	books = append(books, book)
-	book = service.SaveBook(book)
+	savedBook, err := service.CreateBook(book)
 
-	_ = json.NewEncoder(w).Encode(book)
+	if err != nil {
+		log.Printf("ERROR: Failed saving %v", book)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+
+	}
+
+	_ = json.NewEncoder(w).Encode(savedBook)
 
 }
 
