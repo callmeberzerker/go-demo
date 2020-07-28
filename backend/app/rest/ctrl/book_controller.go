@@ -2,11 +2,13 @@ package ctrl
 
 import (
 	"encoding/json"
-	"github.com/gorilla/mux"
+	"fmt"
 	"go-demo/main/app/rest/models"
 	"go-demo/main/app/service"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 var books []models.Book
@@ -29,6 +31,8 @@ func ConfigureBookRoutes(r *mux.Router) {
 }
 
 func getBooks(w http.ResponseWriter, _ *http.Request) {
+	fmt.Println("333")
+	fmt.Println("2 11")
 	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
 	_ = json.NewEncoder(w).Encode(books)
 }
