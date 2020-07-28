@@ -1,13 +1,17 @@
 {
-	"folders": [
-		{
-			"path": "backend"
-		},
-		{
-			"path": "frontend"
-		}
-	],
-	"settings": {
-		"go.useLanguageServer": true
-	}
+  "folders": [
+    {
+      "path": "backend"
+    },
+    {
+      "path": "frontend"
+    }
+  ],
+  "settings": {
+    "go.useLanguageServer": true,
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.formatOnSave": true
+  }
 }
