@@ -1,12 +1,13 @@
 package service
 
 import (
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"go-demo/main/app/integration"
 	"go-demo/main/app/rest/models"
+
+	"github.com/jinzhu/gorm"
 )
 
+// CreateBook - creates a new book
 func CreateBook(bookDto models.Book) (models.Book, error) {
 	db := integration.OpenDbConnection()
 
@@ -21,9 +22,9 @@ func CreateBook(bookDto models.Book) (models.Book, error) {
 			},
 		}
 		if err := integration.SaveNewBook(bookEntity, trx).Error; err != nil {
-
 			return err
 		}
+
 		return nil
 	})
 

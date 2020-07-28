@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import MyComp from "./components/MyComp.svelte";
 	export let name;
 </script>

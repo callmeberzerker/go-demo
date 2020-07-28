@@ -1,11 +1,13 @@
 package integration
 
 import (
-	"github.com/joho/godotenv"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
+// GetEnvValue - gets env value based on a key
 func GetEnvValue(key string) string {
 
 	// load .env file
