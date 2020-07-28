@@ -32,7 +32,7 @@ func ConfigureBookRoutes(r *mux.Router) {
 }
 
 func getBooks(w http.ResponseWriter, _ *http.Request) {
-	fmt.Println("333")
+	fmt.Println("1221")
 	fmt.Println("2 11")
 	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
 	_ = json.NewEncoder(w).Encode(books)
