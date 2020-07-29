@@ -8,4 +8,4 @@
 
 ## Frontend
 
-* React (create-react-app)
+* svelte
