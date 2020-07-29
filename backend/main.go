@@ -1,11 +1,13 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
 	"go-demo/main/app/integration"
 	"go-demo/main/app/rest/ctrl"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -14,5 +16,5 @@ func main() {
 	integration.MigrateModels()
 
 	ctrl.ConfigureBookRoutes(r)
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Fatal(http.ListenAndServe(":8080", handlers.CORS()(r)))
 }
