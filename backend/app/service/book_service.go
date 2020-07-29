@@ -53,9 +53,10 @@ func GetAllBooks() ([]models.Book, error) {
 	for _, book := range booksFromDb {
 
 		bookRest := models.Book{
-			ID:    int64(book.ID),
-			Isbn:  book.Isbn,
-			Title: book.Title,
+			ID:       int64(book.ID),
+			Isbn:     book.Isbn,
+			Title:    book.Title,
+			AuthorID: int64(book.AuthorID),
 		}
 		booksMapped = append(booksMapped, bookRest)
 
