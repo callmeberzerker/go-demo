@@ -1,14 +1,16 @@
 package models
 
+// Book - REST GET model
 type Book struct {
-	ID     string  `json:"id"`
-	Isbn   string  `json:"isbn"`
-	Title  string  `json:"title"`
-	Author *Author `json:"author"`
+	ID       int64  `json:"id"`
+	Isbn     string `json:"isbn"`
+	Title    string `json:"title"`
+	AuthorID int64  `json:"authorId"`
 }
 
+// Author - REST model
 type Author struct {
-	ID        uint   `json:"id"`
+	ID        int64  `json:"id"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 }
