@@ -10,8 +10,22 @@
   "settings": {
     "go.useLanguageServer": true,
     "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      }
     },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      }
+    },
+    // "[svelte]": {
+    //   "editor.codeActionsOnSave": {
+    //     "source.organizeImports": true
+    //   }
+    // },
     "editor.formatOnSave": true
   }
 }

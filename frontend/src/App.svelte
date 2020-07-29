@@ -1,19 +1,21 @@
 <script lang="ts">
-  import Counter from "./components/Counter.svelte";
-  import Cities from "./components/Cities.svelte";
-  import StarWars from "./components/StarWars.svelte";
-  import IntroduceYourself from "./components/IntroduceYourself.svelte";
-  import Characters from "./components/Characters.svelte";
-  import StoreDemo from "./components/store/StoreDemo.svelte";
+  import { Link, Route, Router } from "svelte-routing";
+  import BooksPage from "./books/BooksPage.svelte";
+  import AuthorsPage from "./authors/AuthorsPage.svelte";
+
+  export let url = "";
 </script>
 
-<main>
+<Router {url}>
+  <nav>
+    <Link to="/authors">Authors</Link>
+    <Link to="/books">Books</Link>
+  </nav>
+  <div>
+    <Route path="authors" component={AuthorsPage} />
 
-  <!-- <Counter /> -->
-  <!-- <Cities /> -->
-  <!-- <StarWars /> -->
-  <!-- <IntroduceYourself /> -->
-  <!-- <Characters /> -->
+    <Route path="books" component={BooksPage} />
+  </div>
+</Router>
 
-  <StoreDemo />
-</main>
+<div>TEST!</div>
