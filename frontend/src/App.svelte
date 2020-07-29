@@ -1,36 +1,19 @@
 <script lang="ts">
-  import MyComp from "./components/MyComp.svelte";
-  export let name: string;
+  import Counter from "./components/Counter.svelte";
+  import Cities from "./components/Cities.svelte";
+  import StarWars from "./components/StarWars.svelte";
+  import IntroduceYourself from "./components/IntroduceYourself.svelte";
+  import Characters from "./components/Characters.svelte";
+  import StoreDemo from "./components/store/StoreDemo.svelte";
 </script>
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
-
 <main>
-  <h1>Hello {name}!</h1>
-  <p>
-    Visit the
-    <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
-    to learn how to build Svelte apps.
-  </p>
-  <MyComp name="spaski" />
+
+  <!-- <Counter /> -->
+  <!-- <Cities /> -->
+  <!-- <StarWars /> -->
+  <!-- <IntroduceYourself /> -->
+  <!-- <Characters /> -->
+
+  <StoreDemo />
 </main>
