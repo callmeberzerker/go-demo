@@ -2,7 +2,6 @@ package ctrl
 
 import (
 	"encoding/json"
-	"fmt"
 	"go-demo/main/app/rest/models"
 	"go-demo/main/app/service"
 	"log"
@@ -47,31 +46,30 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 	}
 	book, err := service.GetBook(parsedID)
 
-	if err != nil || book == nil {
+	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
-	fmt.Printf("Value is %#v", book)
-	_ = json.NewEncoder(w).Encode(*book)
+	_ = json.NewEncoder(w).Encode(book)
 }
 
 func createBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	// var book models.Book
-	// _ = json.NewDecoder(r.Body).Decode(&book)
-	// books = append(books, book)
-	// savedBook, err := service.CreateBook(book)
+	var book models.Book
+	_ = json.NewDecoder(r.Body).Decode(&book)
+	books = append(books, book)
+	savedBook, err := service.CreateBook(book)
 
-	// if err != nil {
-	// 	log.Printf("ERROR: Failed saving %v", book)
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// 	return
+	if err != nil {
+		log.Printf("ERROR: Failed saving %v", book)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 
-	// }
+	}
 
-	// _ = json.NewEncoder(w).Encode(savedBook)
+	_ = json.NewEncoder(w).Encode(savedBook)
 
 }
 

@@ -27,22 +27,31 @@ func UpdateBook(entity *Book, db *gorm.DB) (*gorm.DB, error) {
 }
 
 // SaveNewBook - saves a new book
-func SaveNewBook(entity *Book, db *gorm.DB) (*gorm.DB, error) {
+func SaveNewBook(entity *Book, db *gorm.DB) error {
 	isNewRecord := db.NewRecord(entity) // => returns `true` as primary key is blank
+	var err error
 
 	if isNewRecord {
-		return db.Create(&entity), nil
+		db.Create(&entity)
+	} else {
+		err = errors.New("cannot create a new entity with a primary key set")
 	}
 
-	return db, errors.New("Can't create a record with existing primary key")
+	if db.Error != nil {
+		err = db.Error
+	}
+
+	return err
 }
 
 // GetBookByID - gets a book by id
-func GetBookByID(id int64, db *gorm.DB) *Book {
+func GetBookByID(id int64, db *gorm.DB) (Book, error) {
 	book := Book{}
-	if db.First(&book, id).RecordNotFound() {
-		return nil
+	var err error
+
+	if db.First(&book, id).RecordNotFound() && db.Error != nil {
+		err = errors.New("Record not found")
 	}
 
-	return &book
+	return book, err
 }

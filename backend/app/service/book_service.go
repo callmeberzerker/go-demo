@@ -11,29 +11,31 @@ import (
 // CreateBook - creates a new book
 func CreateBook(bookDto models.Book) (models.Book, error) {
 	db := integration.OpenDbConnection()
-
+	bookEntity := &integration.Book{
+		Isbn:     bookDto.Isbn,
+		Title:    bookDto.Title,
+		AuthorID: uint(bookDto.AuthorID),
+	}
 	err := db.Transaction(func(trx *gorm.DB) error {
-		// var bookEntity = &integration.Book{
-		// 	Isbn:  bookDto.Isbn,
-		// 	Title: bookDto.Title,
-		// 	Author: integration.Author{
-		// 		Model:     gorm.Model{ID: bookDto.Author.ID},
-		// 		FirstName: bookDto.Author.FirstName,
-		// 		LastName:  bookDto.Author.LastName,
-		// 	},
-		// }
-		// if result, err := integration.SaveNewBook(bookEntity, trx); err != nil || result.Error != nil {
-		// 	return err
-		// }
+
+		if err := integration.SaveNewBook(bookEntity, trx); err != nil {
+			return err
+		}
 
 		return nil
 	})
 
 	if err != nil {
+		fmt.Printf("Error happened %#v", err)
 		return models.Book{}, err
 	}
 
-	return models.Book{}, nil
+	return models.Book{
+		ID:       int64(bookEntity.ID),
+		AuthorID: int64(bookEntity.AuthorID),
+		Title:    bookEntity.Title,
+		Isbn:     bookEntity.Isbn,
+	}, err
 }
 
 // GetAllBooks - gets all books
@@ -59,24 +61,26 @@ func GetAllBooks() ([]models.Book, error) {
 
 	}
 
-	fmt.Println("returning")
 	return booksMapped, nil
 }
 
 // GetBook - Gets a single book by id
-func GetBook(ID int64) (*models.Book, error) {
+func GetBook(ID int64) (models.Book, error) {
 
 	db := integration.OpenDbConnection()
 
-	book := integration.GetBookByID(ID, db)
-	if db.Error != nil || book == nil {
-		return nil, db.Error
+	book, err := integration.GetBookByID(ID, db)
+	if err != nil {
+		return models.Book{}, db.Error
 	}
 
 	bookRest := models.Book{
-		ID: int64(book.ID),
+		ID:       int64(book.ID),
+		AuthorID: int64(book.AuthorID),
+		Isbn:     book.Isbn,
+		Title:    book.Title,
 	}
 
-	return &bookRest, nil
+	return bookRest, nil
 
 }
