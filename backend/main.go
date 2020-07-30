@@ -17,6 +17,5 @@ func main() {
 	r := mux.NewRouter()
 	integration.MigrateModels()
 	ctrl.ConfigureBookRoutes(r)
-	log.Debug().Msg("Heyo")
 	log.Error().Err(http.ListenAndServe(":8080", handlers.CORS()(r)))
 }

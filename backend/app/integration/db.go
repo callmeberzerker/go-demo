@@ -37,4 +37,5 @@ func MigrateModels() {
 	db.AutoMigrate(&Author{})
 	db.Model(&Book{}).AddForeignKey("author_id", "author(id)", "RESTRICT", "RESTRICT")
 
+	log.Debug().Msg("finished migration of entity models")
 }
