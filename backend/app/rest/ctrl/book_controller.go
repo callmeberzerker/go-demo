@@ -65,7 +65,7 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 	savedBook, err := service.CreateBook(book)
 
 	if err != nil {
-		log.Error().Msgf("failed creating new book [%#v]", book)
+		log.Error().Msgf("failed creating new book [%#v] with error [%v]", book, err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 

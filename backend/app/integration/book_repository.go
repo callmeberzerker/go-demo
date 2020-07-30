@@ -37,13 +37,11 @@ func SaveNewBook(entity *Book, db *gorm.DB) error {
 	var err error
 
 	if isNewRecord {
-		db.Create(&entity)
+		if dbErr := db.Create(&entity).Error; dbErr != nil {
+			err = dbErr
+		}
 	} else {
 		err = errors.New("cannot create a new entity with a primary key set")
-	}
-
-	if db.Error != nil {
-		err = db.Error
 	}
 
 	return err

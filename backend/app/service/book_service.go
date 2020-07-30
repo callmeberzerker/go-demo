@@ -24,7 +24,6 @@ func CreateBook(bookDto models.Book) (models.Book, error) {
 
 		return nil
 	})
-
 	if err != nil {
 		return models.Book{}, err
 	}
