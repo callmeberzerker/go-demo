@@ -21,10 +21,7 @@ func UpdateBook(entity *Book, trx *gorm.DB) error {
 	isNewRecord := trx.NewRecord(entity) // => returns `true` as primary key is blank
 	var error error
 	if !isNewRecord {
-
-		if err := trx.Model(&entity).Update(&entity).Error; err != nil {
-			error = err
-		}
+		error = trx.Model(&entity).Update(&entity).Error
 	} else {
 		error = errors.New("Can't update a record with non-existent primary key")
 	}
