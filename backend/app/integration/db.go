@@ -26,6 +26,7 @@ func OpenDbConnection() *gorm.DB {
 	if err != nil {
 		log.Fatal(fmt.Errorf("something is broken %v", err))
 	}
+	db.LogMode(false)
 	return db
 }
 

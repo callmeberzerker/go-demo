@@ -99,6 +99,7 @@ func UpdateBook(bookDto models.Book) (models.Book, error) {
 	err := db.Transaction(func(trx *gorm.DB) error {
 
 		if err := integration.UpdateBook(bookEntity, trx); err != nil {
+
 			return err
 		}
 

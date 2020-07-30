@@ -2,7 +2,6 @@ package ctrl
 
 import (
 	"encoding/json"
-	"fmt"
 	"go-demo/main/app/rest/models"
 	"go-demo/main/app/service"
 	"log"
@@ -82,8 +81,8 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 	updatedBook, err := service.UpdateBook(book)
 
 	if err != nil {
-		fmt.Printf("ERROR: Failed to update book with id [%d]", book.ID)
-		fmt.Printf("ERROR: %#v", err)
+
+		log.Printf("Failed to update book with id [%d]\n", book.ID)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
