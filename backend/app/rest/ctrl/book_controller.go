@@ -2,6 +2,7 @@ package ctrl
 
 import (
 	"encoding/json"
+	"fmt"
 	"go-demo/main/app/rest/models"
 	"go-demo/main/app/service"
 	"log"
@@ -75,14 +76,19 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 
 func updateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	// params := mux.Vars(r)
+	var book models.Book
+	_ = json.NewDecoder(r.Body).Decode(&book)
 
-	// for i, item := range books {
-	// 	if item.ID == params["id"] {
-	// 		books = append(books[:i], books[i+1:]...)
-	// 		break
-	// 	}
-	// }
+	updatedBook, err := service.UpdateBook(book)
+
+	if err != nil {
+		fmt.Printf("ERROR: Failed to update book with id [%d]", book.ID)
+		fmt.Printf("ERROR: %#v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	_ = json.NewEncoder(w).Encode(updatedBook)
 }
 
 func deleteBook(w http.ResponseWriter, r *http.Request) {

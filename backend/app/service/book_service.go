@@ -85,3 +85,37 @@ func GetBook(ID int64) (models.Book, error) {
 	return bookRest, nil
 
 }
+
+// UpdateBook - updates a book
+func UpdateBook(bookDto models.Book) (models.Book, error) {
+
+	db := integration.OpenDbConnection()
+	bookEntity := &integration.Book{
+		Model:    gorm.Model{ID: uint(bookDto.ID)},
+		Isbn:     bookDto.Isbn,
+		Title:    bookDto.Title,
+		AuthorID: uint(bookDto.AuthorID),
+	}
+	err := db.Transaction(func(trx *gorm.DB) error {
+
+		if err := integration.UpdateBook(bookEntity, trx); err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return models.Book{}, err
+	}
+
+	updatedBook := models.Book{
+		ID:       int64(bookEntity.ID),
+		Isbn:     bookEntity.Isbn,
+		Title:    bookEntity.Title,
+		AuthorID: int64(bookEntity.AuthorID),
+	}
+
+	return updatedBook, nil
+
+}

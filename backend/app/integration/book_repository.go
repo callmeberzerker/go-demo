@@ -16,14 +16,19 @@ func GetAllBooks(db *gorm.DB) ([]Book, error) {
 }
 
 // UpdateBook - updates a book
-func UpdateBook(entity *Book, db *gorm.DB) (*gorm.DB, error) {
+func UpdateBook(entity *Book, db *gorm.DB) error {
 	isNewRecord := db.NewRecord(entity) // => returns `true` as primary key is blank
-
+	var err error
 	if !isNewRecord {
-		return db.Create(&entity), nil
+		db.Model(&entity).Update(&entity)
+		if db.Error != nil {
+			err = db.Error
+		}
+	} else {
+		err = errors.New("Can't create a record with non-existent primary key")
 	}
 
-	return db, errors.New("Can't create a record with non-existent primary key")
+	return err
 }
 
 // SaveNewBook - saves a new book
