@@ -2,9 +2,9 @@ package integration
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/jinzhu/gorm"
+	"github.com/rs/zerolog/log"
 
 	// does side effects
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -24,7 +24,7 @@ func OpenDbConnection() *gorm.DB {
 	db, err := gorm.Open("postgres", dbURI)
 
 	if err != nil {
-		log.Fatal(fmt.Errorf("something is broken %v", err))
+		log.Error().Msg(err.Error())
 	}
 	db.LogMode(false)
 	return db

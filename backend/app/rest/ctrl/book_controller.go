@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"go-demo/main/app/rest/models"
 	"go-demo/main/app/service"
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/zerolog/log"
 )
 
 var books []models.Book
@@ -24,7 +24,7 @@ func ConfigureBookRoutes(r *mux.Router) {
 
 func getBooks(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
-
+	log.Info().Msg("Info message")
 	books, err := service.GetAllBooks()
 
 	if err != nil {
