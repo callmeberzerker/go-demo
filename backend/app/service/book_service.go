@@ -26,7 +26,6 @@ func CreateBook(bookDto models.Book) (models.Book, error) {
 	})
 
 	if err != nil {
-		fmt.Printf("Error happened %#v", err)
 		return models.Book{}, err
 	}
 
