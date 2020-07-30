@@ -26,7 +26,6 @@ func ConfigureBookRoutes(r *mux.Router) {
 
 func getBooks(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
-	log.Info().Msg("Info message")
 	books, err := service.GetAllBooks()
 
 	if err != nil {
@@ -65,7 +64,7 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 	savedBook, err := service.CreateBook(book)
 
 	if err != nil {
-		log.Error().Msgf("failed creating new book [%#v] with error [%v]", book, err)
+		log.Error().Msgf("failed creating new book [%#v]\nWith reason: [%v]", book, err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 
@@ -84,7 +83,7 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 
-		log.Printf("Failed to update book with id [%d]\n", book.ID)
+		log.Error().Msgf("failed to update book with id [%d]\nWith reason: [%v]", book.ID, err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -94,15 +93,22 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 
 func deleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	// params := mux.Vars(r)
 
-	// for i, item := range books {
-	// 	if item.ID == params["id"] {
-	// 		books = append(books[:i], books[i+1:]...)
-	// 		break
-	// 	}
-	// }
+	params := mux.Vars(r)
 
+	ID, err := strconv.ParseUint(params["id"], 10, 64)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = service.DeleteBook(uint(ID))
+
+	if err != nil {
+		log.Error().Msgf("failed to delete book with id [%d]\nWith reason: [%v]", ID, err)
+		w.WriteHeader(http.StatusInternalServerError)
+
+	}
 	// _ = json.NewEncoder(w).Encode(books)
 
 }

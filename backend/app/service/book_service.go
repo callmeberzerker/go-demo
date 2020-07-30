@@ -118,3 +118,12 @@ func UpdateBook(bookDto models.Book) (models.Book, error) {
 	return updatedBook, nil
 
 }
+
+// DeleteBook - deletes a book by id
+func DeleteBook(ID uint) error {
+	db := integration.OpenDbConnection()
+
+	err := integration.DeleteBook(ID, db)
+
+	return err
+}

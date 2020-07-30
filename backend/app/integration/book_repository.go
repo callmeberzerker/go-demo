@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/jinzhu/gorm"
+	"github.com/rs/zerolog/log"
 )
 
 // GetAllBooks - gets all books
@@ -57,4 +58,13 @@ func GetBookByID(id int64, db *gorm.DB) (Book, error) {
 	}
 
 	return book, err
+}
+
+// DeleteBook - updates a book
+func DeleteBook(ID uint, db *gorm.DB) error {
+	if err := db.Delete(&Book{Model: gorm.Model{ID: ID}}).Error; err != nil {
+		return err
+	}
+	log.Info().Msgf("Deleted book with id [%d]", ID)
+	return nil
 }

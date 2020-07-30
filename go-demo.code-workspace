@@ -9,6 +9,10 @@
   ],
   "settings": {
     "go.useLanguageServer": true,
+    "go.languageServerExperimentalFeatures": {
+      "diagnostics": true,
+      "documentLink": true
+    },
     "[javascript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.codeActionsOnSave": {
