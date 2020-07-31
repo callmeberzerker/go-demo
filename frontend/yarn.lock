@@ -624,6 +624,11 @@ prettier@2.0.5:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
   integrity sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
 
+property-expr@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-2.0.2.tgz#fff2a43919135553a3bc2fdd94bdb841965b2330"
+  integrity sha512-bc/5ggaYZxNkFKj374aLbEDqVADdYaLcFo8XBkishUWbaAdjlphaBFns9TvRA2pUseVL/wMFmui9X3IdNDU37g==
+
 randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
@@ -805,6 +810,13 @@ svelte-check@^1.0.0:
     vscode-languageserver-protocol "3.15.3"
     vscode-languageserver-types "3.15.1"
     vscode-uri "2.1.1"
+
+svelte-forms-lib@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/svelte-forms-lib/-/svelte-forms-lib-1.1.2.tgz#c500647942b26022a3ed6f910b80e83f2a790a6e"
+  integrity sha512-os/5LmC648XQ+Io9DJYdsnk0HGjTADz4MPVN3oVFBunIhSXn9zJaDl91OeUXJYHV1EunQV70LEAQpn/Fkclqig==
+  dependencies:
+    property-expr "2.0.2"
 
 svelte-language-server@*:
   version "0.10.79"

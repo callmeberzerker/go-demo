@@ -6,10 +6,9 @@ import (
 	"go-demo/main/app/rest/ctrl"
 	"net/http"
 
-	"github.com/rs/zerolog/log"
-
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/rs/zerolog/log"
 )
 
 func main() {
@@ -17,5 +16,7 @@ func main() {
 	r := mux.NewRouter()
 	integration.MigrateModels()
 	ctrl.ConfigureBookRoutes(r)
-	log.Error().Err(http.ListenAndServe(":8080", handlers.CORS()(r)))
+	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
+	allowedHeaders := handlers.AllowedHeaders([]string{"content-type"})
+	log.Error().Err(http.ListenAndServe(":8080", handlers.CORS(allowedMethods, allowedHeaders)(r)))
 }
