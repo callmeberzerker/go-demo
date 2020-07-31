@@ -26,10 +26,10 @@ func ConfigureBookRoutes(r *mux.Router) {
 
 func getBooks(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
-	books, err := service.GetAllBooks()
+	books, err := service.GetAllAuthors()
 
 	if err != nil {
-		log.Printf("ERROR: Failed fetching books %v", err)
+		log.Error().Msgf("failed fetching all books\nWith reason: [%v]", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -45,7 +45,7 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	book, err := service.GetBook(parsedID)
+	book, err := service.GetAuthorByID(parsedID)
 
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
@@ -102,7 +102,7 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = service.DeleteBook(uint(ID))
+	err = service.DeleteAuthorByID(uint(ID))
 
 	if err != nil {
 		log.Error().Msgf("failed to delete book with id [%d]\nWith reason: [%v]", ID, err)
