@@ -78,8 +78,6 @@
             {id} - {title}
             <button on:click={handleEdit(id)}>Edit</button>
           </li>
-        {:else}
-          <li>Loading...</li>
         {/each}
       </ul>
       <button on:click={newBook}>Add new book</button>
