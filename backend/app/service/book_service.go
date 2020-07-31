@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"go-demo/main/app/integration"
 	"go-demo/main/app/rest/models"
 
@@ -44,7 +43,6 @@ func GetAllBooks() ([]models.Book, error) {
 	var booksMapped = []models.Book{}
 
 	if err != nil {
-		fmt.Printf("Error happened %v", err)
 		return []models.Book{}, err
 	}
 

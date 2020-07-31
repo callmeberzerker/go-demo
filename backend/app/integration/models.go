@@ -22,10 +22,10 @@ type Author struct {
 
 // TableName - ensures proper SQL table name
 func (Book) TableName() string {
-	return "book"
+	return "books"
 }
 
 // TableName - ensures proper SQL table name
 func (Author) TableName() string {
-	return "author"
+	return "authors"
 }
