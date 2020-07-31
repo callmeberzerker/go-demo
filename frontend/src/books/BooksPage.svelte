@@ -31,7 +31,7 @@
       bookToBeEdited = updatedBook;
     } else {
       const newBook = await BookService.createBook(bookValues);
-      books.push(newBook);
+      books = [...books, newBook];
       bookToBeEdited = newBook;
     }
   };
