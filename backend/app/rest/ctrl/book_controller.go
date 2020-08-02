@@ -56,7 +56,7 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 func createBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var book models.Book
+	var book models.CreateBook
 	_ = json.NewDecoder(r.Body).Decode(&book)
 
 	log.Info().Msgf("%#v", book)

@@ -8,12 +8,12 @@ import (
 )
 
 // CreateBook - creates a new book
-func CreateBook(bookDto models.Book) (models.Book, error) {
+func CreateBook(bookDto models.CreateBook) (models.Book, error) {
 	db := integration.OpenDbConnection()
 	bookEntity := &integration.Book{
 		Isbn:     bookDto.Isbn,
 		Title:    bookDto.Title,
-		AuthorID: uint(*bookDto.AuthorID),
+		AuthorID: uint(bookDto.AuthorID),
 	}
 	err := db.Transaction(func(trx *gorm.DB) error {
 
@@ -27,12 +27,9 @@ func CreateBook(bookDto models.Book) (models.Book, error) {
 		return models.Book{}, err
 	}
 
-	authorID := int64(bookEntity.AuthorID)
-	authorIDPtr := &authorID
-
 	return models.Book{
 		ID:       int64(bookEntity.ID),
-		AuthorID: authorIDPtr,
+		AuthorID: int64(bookEntity.AuthorID),
 		Title:    bookEntity.Title,
 		Isbn:     bookEntity.Isbn,
 	}, err
@@ -51,14 +48,11 @@ func GetAllBooks() ([]models.Book, error) {
 
 	for _, book := range booksFromDb {
 
-		authorID := int64(book.AuthorID)
-		authorIDPtr := &authorID
-
 		bookRest := models.Book{
 			ID:       int64(book.ID),
 			Isbn:     book.Isbn,
 			Title:    book.Title,
-			AuthorID: authorIDPtr,
+			AuthorID: int64(book.AuthorID),
 		}
 		booksMapped = append(booksMapped, bookRest)
 
@@ -77,12 +71,9 @@ func GetBook(ID int64) (models.Book, error) {
 		return models.Book{}, db.Error
 	}
 
-	authorID := int64(book.AuthorID)
-	authorIDPtr := &authorID
-
 	bookRest := models.Book{
 		ID:       int64(book.ID),
-		AuthorID: authorIDPtr,
+		AuthorID: int64(book.AuthorID),
 		Isbn:     book.Isbn,
 		Title:    book.Title,
 	}
@@ -99,7 +90,7 @@ func UpdateBook(bookDto models.Book) (models.Book, error) {
 		Model:    gorm.Model{ID: uint(bookDto.ID)},
 		Isbn:     bookDto.Isbn,
 		Title:    bookDto.Title,
-		AuthorID: uint(*bookDto.AuthorID),
+		AuthorID: uint(bookDto.AuthorID),
 	}
 	err := db.Transaction(func(trx *gorm.DB) error {
 
@@ -114,14 +105,11 @@ func UpdateBook(bookDto models.Book) (models.Book, error) {
 		return models.Book{}, err
 	}
 
-	authorID := int64(bookEntity.AuthorID)
-	authorIDPtr := &authorID
-
 	updatedBook := models.Book{
 		ID:       int64(bookEntity.ID),
 		Isbn:     bookEntity.Isbn,
 		Title:    bookEntity.Title,
-		AuthorID: authorIDPtr,
+		AuthorID: int64(bookEntity.AuthorID),
 	}
 
 	return updatedBook, nil
