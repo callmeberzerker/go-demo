@@ -13,11 +13,11 @@ import (
 
 // ConfigureAuthorRoutes - configures Author routes
 func ConfigureAuthorRoutes(r *mux.Router) {
-	r.HandleFunc("/api/author", getAuthors).Methods("GET")
-	r.HandleFunc("/api/author/{id}", getAuthor).Methods("GET")
-	r.HandleFunc("/api/author", createAuthor).Methods("POST")
-	r.HandleFunc("/api/author/{id}", deleteAuthor).Methods("DELETE")
-	r.HandleFunc("/api/author/{id}", updateAuthor).Methods("PUT")
+	r.HandleFunc("/api/authors", getAuthors).Methods("GET")
+	r.HandleFunc("/api/authors/{id}", getAuthor).Methods("GET")
+	r.HandleFunc("/api/authors", createAuthor).Methods("POST")
+	r.HandleFunc("/api/authors/{id}", deleteAuthor).Methods("DELETE")
+	r.HandleFunc("/api/authors/{id}", updateAuthor).Methods("PUT")
 
 	log.Debug().Msg("configured author routes")
 }
@@ -44,32 +44,31 @@ func getAuthor(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	book, err := service.GetAuthorByID(parsedID)
+	author, err := service.GetAuthorByID(parsedID)
 
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
-	_ = json.NewEncoder(w).Encode(book)
+	_ = json.NewEncoder(w).Encode(author)
 }
 
 func createAuthor(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var book models.Book
-	_ = json.NewDecoder(r.Body).Decode(&book)
-	books = append(books, book)
-	savedBook, err := service.CreateBook(book)
+	var author models.Author
+	_ = json.NewDecoder(r.Body).Decode(&author)
+	savedAuthor, err := service.CreateAuthor(author)
 
 	if err != nil {
-		log.Error().Msgf("failed creating new book [%#v]\nWith reason: [%v]", book, err)
+		log.Error().Msgf("failed creating new author [%#v]\nWith reason: [%v]", author, err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 
 	}
 
-	_ = json.NewEncoder(w).Encode(savedBook)
+	_ = json.NewEncoder(w).Encode(savedAuthor)
 
 }
 

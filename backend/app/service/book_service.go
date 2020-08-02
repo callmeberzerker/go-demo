@@ -13,7 +13,7 @@ func CreateBook(bookDto models.Book) (models.Book, error) {
 	bookEntity := &integration.Book{
 		Isbn:     bookDto.Isbn,
 		Title:    bookDto.Title,
-		AuthorID: uint(bookDto.AuthorID),
+		AuthorID: uint(*bookDto.AuthorID),
 	}
 	err := db.Transaction(func(trx *gorm.DB) error {
 
@@ -27,9 +27,12 @@ func CreateBook(bookDto models.Book) (models.Book, error) {
 		return models.Book{}, err
 	}
 
+	authorID := int64(bookEntity.AuthorID)
+	authorIDPtr := &authorID
+
 	return models.Book{
 		ID:       int64(bookEntity.ID),
-		AuthorID: int64(bookEntity.AuthorID),
+		AuthorID: authorIDPtr,
 		Title:    bookEntity.Title,
 		Isbn:     bookEntity.Isbn,
 	}, err
@@ -48,11 +51,14 @@ func GetAllBooks() ([]models.Book, error) {
 
 	for _, book := range booksFromDb {
 
+		authorID := int64(book.AuthorID)
+		authorIDPtr := &authorID
+
 		bookRest := models.Book{
 			ID:       int64(book.ID),
 			Isbn:     book.Isbn,
 			Title:    book.Title,
-			AuthorID: int64(book.AuthorID),
+			AuthorID: authorIDPtr,
 		}
 		booksMapped = append(booksMapped, bookRest)
 
@@ -71,9 +77,12 @@ func GetBook(ID int64) (models.Book, error) {
 		return models.Book{}, db.Error
 	}
 
+	authorID := int64(book.AuthorID)
+	authorIDPtr := &authorID
+
 	bookRest := models.Book{
 		ID:       int64(book.ID),
-		AuthorID: int64(book.AuthorID),
+		AuthorID: authorIDPtr,
 		Isbn:     book.Isbn,
 		Title:    book.Title,
 	}
@@ -90,7 +99,7 @@ func UpdateBook(bookDto models.Book) (models.Book, error) {
 		Model:    gorm.Model{ID: uint(bookDto.ID)},
 		Isbn:     bookDto.Isbn,
 		Title:    bookDto.Title,
-		AuthorID: uint(bookDto.AuthorID),
+		AuthorID: uint(*bookDto.AuthorID),
 	}
 	err := db.Transaction(func(trx *gorm.DB) error {
 
@@ -105,11 +114,14 @@ func UpdateBook(bookDto models.Book) (models.Book, error) {
 		return models.Book{}, err
 	}
 
+	authorID := int64(bookEntity.AuthorID)
+	authorIDPtr := &authorID
+
 	updatedBook := models.Book{
 		ID:       int64(bookEntity.ID),
 		Isbn:     bookEntity.Isbn,
 		Title:    bookEntity.Title,
-		AuthorID: int64(bookEntity.AuthorID),
+		AuthorID: authorIDPtr,
 	}
 
 	return updatedBook, nil

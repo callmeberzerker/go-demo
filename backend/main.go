@@ -16,6 +16,7 @@ func main() {
 	r := mux.NewRouter()
 	integration.MigrateModels()
 	ctrl.ConfigureBookRoutes(r)
+	ctrl.ConfigureAuthorRoutes(r)
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
 	allowedHeaders := handlers.AllowedHeaders([]string{"content-type"})
 	log.Error().Err(http.ListenAndServe(":8080", handlers.CORS(allowedMethods, allowedHeaders)(r)))

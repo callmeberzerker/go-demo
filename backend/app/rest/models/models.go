@@ -5,7 +5,7 @@ type Book struct {
 	ID       int64  `json:"id"`
 	Isbn     string `json:"isbn"`
 	Title    string `json:"title"`
-	AuthorID int64  `json:"authorId"`
+	AuthorID *int64 `json:"authorId"`
 }
 
 // Author - REST model

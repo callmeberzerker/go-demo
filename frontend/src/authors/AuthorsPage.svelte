@@ -1,9 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Book, Author } from "../@types";
+  import type { Author } from "../@types";
   import { AuthorService } from "./AuthorService";
   import { createForm } from "svelte-forms-lib";
-  import BookForm from "./BookForm.svelte";
   import AuthorForm from "./AuthorForm.svelte";
   let authors: Author[] = [];
 
@@ -80,7 +79,7 @@
           </li>
         {/each}
       </ul>
-      <button on:click={newAuthor}>Add new book</button>
+      <button on:click={newAuthor}>Add new author</button>
     </div>
 
     <div class="column">

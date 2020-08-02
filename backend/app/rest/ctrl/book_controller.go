@@ -11,8 +11,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-var books []models.Book
-
 // ConfigureBookRoutes - configures book routes
 func ConfigureBookRoutes(r *mux.Router) {
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
@@ -26,7 +24,7 @@ func ConfigureBookRoutes(r *mux.Router) {
 
 func getBooks(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
-	books, err := service.GetAllAuthors()
+	books, err := service.GetAllBooks()
 
 	if err != nil {
 		log.Error().Msgf("failed fetching all books\nWith reason: [%v]", err)
@@ -60,7 +58,8 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 
 	var book models.Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
-	books = append(books, book)
+
+	log.Info().Msgf("%#v", book)
 	savedBook, err := service.CreateBook(book)
 
 	if err != nil {
