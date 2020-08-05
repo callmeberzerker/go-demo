@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Book } from "../@types";
+  import type { Book, BookCreate } from "../@types";
   import { BookService } from "./BookService";
   import { createForm } from "svelte-forms-lib";
   import BookForm from "./BookForm.svelte";
@@ -30,7 +30,9 @@
       });
       bookToBeEdited = updatedBook;
     } else {
-      const newBook = await BookService.createBook(bookValues);
+      const { id, ...rest } = bookValues;
+      const newBookValues = { ...rest } as BookCreate;
+      const newBook = await BookService.createBook(newBookValues);
       books = [...books, newBook];
       bookToBeEdited = newBook;
     }

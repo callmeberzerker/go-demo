@@ -1,5 +1,5 @@
 import axios from "redaxios";
-import type { Book } from "../@types";
+import type { Book, BookCreate } from "../@types";
 
 const BASE_URL = "http://localhost:8080/api/books";
 
@@ -25,7 +25,7 @@ const updateBook = async (book: Book): Promise<Book> => {
  *
  * @param book the book to be created.
  */
-const createBook = async (book: Book): Promise<Book> => {
+const createBook = async (book: BookCreate): Promise<Book> => {
   const response = await client.post(BASE_URL, book);
   return response.data;
 };

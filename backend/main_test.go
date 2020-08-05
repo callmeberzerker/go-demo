@@ -24,8 +24,6 @@ func TestStuff(t *testing.T) {
 		t.Error(err)
 	}
 
-	t.Error("WTF")
-	t.Log("HEYO THERE")
 	t.Logf("%#v", book)
 
 }
