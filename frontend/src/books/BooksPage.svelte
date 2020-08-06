@@ -32,6 +32,8 @@
     } else {
       const { id, ...rest } = bookValues;
       const newBookValues = { ...rest } as BookCreate;
+      // @ts-ignore
+      newBookValues.authorId = parseInt(newBookValues.authorId);
       const newBook = await BookService.createBook(newBookValues);
       books = [...books, newBook];
       bookToBeEdited = newBook;
